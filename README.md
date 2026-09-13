@@ -27,6 +27,7 @@ The time is picked random and mostly impredictable.
 People are reaching on time and punctual.
 
 ### The Solution (that nobody asked for)
+
 I made a clock with incorrect time.
 
 ## Technical Details
@@ -35,21 +36,13 @@ For Software:
 - HTML, CSS, and JavaScript
 - Chat GPT and Claude
 
-For Hardware:
-- [List main components]
-- [List specifications]
-- [List tools required]
 
 ### Implementation
 For Software: Designed a functioning website with those features.
-# Installation
-[commands]
 
-# Run
-[commands]
 
 ### Project Documentation
-For Software:
+For Software: Open index.html
 
 # Screenshots (Add at least 3)
 ![alt text](image.png)
@@ -64,43 +57,13 @@ Here you see time. You can adjust time by clicking on the button on the rightsid
 ![alt text](image-3.png)
 Here you can set alarm. You can adjust time by the button rightside.
 
-# Diagrams
-![Workflow](Add your workflow/architecture diagram here)
-*Add caption explaining your workflow*
-
-For Hardware:
-
-# Schematic & Circuit
-![Circuit](Add your circuit diagram here)
-*Add caption explaining connections*
-
-![Schematic](Add your schematic diagram here)
-*Add caption explaining the schematic*
-
-# Build Photos
-![Components](Add photo of your components here)
-*List out all components shown*
-
-![Build](Add photos of build process here)
-*Explain the build steps*
-
-![Final](Add photo of final product here)
-*Explain the final build*
 
 ### Project Demo
 # Video
-[Add your demo video link here]
-*Explain what the video demonstrates*
+<video controls src="Screen Recording 2026-09-13 161813.mp4" title="Title"></video>
+Scroll on the website as you get in. You will see two options to see time and set alarm. You can adjust the hour and minute hand by the crown button on rightside of the clock.
 
-# Additional Demos
-[Add any extra demo materials/links]
 
-## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
-
----
 Made with ❤️ at TinkerHub Useless Projects 
 
 ![Static Badge](https://img.shields.io/badge/TinkerHub-24?color=%23000000&link=https%3A%2F%2Fwww.tinkerhub.org%2F)
