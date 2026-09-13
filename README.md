@@ -24,7 +24,7 @@ The time is picked random and mostly impredictable.
 
 ### The Problem (that doesn't exist)
 
-People are reaching on time and punctual.
+I am not solving a real-world problem. I am solving the problem of making something completely useless in the most unnecessarily professional way possible.
 
 ### The Solution (that nobody asked for)
 
