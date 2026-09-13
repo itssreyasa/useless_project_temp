@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Useless Clock — A TinkerHub Useless Project</title>
+<meta name="description" content="A beautiful, sophisticated, fully interactive clock that does everything a normal clock does — except reliably tell the correct time.">
+<link rel="icon" href="assets/clock.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ NOISE / GRAIN + PARTICLE CANVAS ============ -->
+<canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+<!-- ============ CINEMATIC INTRO ============ -->
+<section id="intro" aria-label="Introduction">
+  <div class="intro-glow" aria-hidden="true"></div>
+  <div class="intro-text-stack">
+    <p class="intro-line" data-line="1">TIME.</p>
+    <p class="intro-line" data-line="2">The one thing you should always trust.</p>
+    <p class="intro-line" data-line="3">&hellip;probably.</p>
+  </div>
+  <button id="skip-intro" type="button" aria-label="Skip introduction">Skip</button>
+  <div class="scroll-cue" aria-hidden="true">
+    <span></span>
+    <p>Scroll</p>
+  </div>
+</section>
+
+<!-- ============ SCROLL STORY ============ -->
+<main id="story" aria-label="Story">
+
+  <section class="story-panel" data-panel="1">
+    <div class="panel-inner">
+      <span class="eyebrow-orbit" aria-hidden="true"></span>
+      <h2 class="reveal-text">Every second,<br>accounted for.</h2>
+      <p class="reveal-text sub">Precision engineering meets an entirely relaxed relationship with accuracy.</p>
+    </div>
+    <div class="floating-numerals" aria-hidden="true">
+      <span style="--i:0">XII</span>
+      <span style="--i:1">III</span>
+      <span style="--i:2">VI</span>
+      <span style="--i:3">IX</span>
+    </div>
+  </section>
+
+  <section class="story-panel" data-panel="2">
+    <div class="dial-cluster" aria-hidden="true">
+      <div class="mini-dial mini-dial--a"><div class="mini-hand h"></div><div class="mini-hand m"></div></div>
+      <div class="mini-dial mini-dial--b"><div class="mini-hand h"></div><div class="mini-hand m"></div></div>
+      <div class="mini-dial mini-dial--c"><div class="mini-hand h"></div><div class="mini-hand m"></div></div>
+    </div>
+    <div class="panel-inner">
+      <h2 class="reveal-text">Three dials.<br>Three opinions.</h2>
+      <p class="reveal-text sub">Synchronized across every time zone we could think of. Agreement was never the goal.</p>
+    </div>
+  </section>
+
+  <section class="story-panel" data-panel="3">
+    <div class="panel-inner">
+      <h2 class="reveal-text">Calibrated by<br>committee.</h2>
+      <p class="reveal-text sub">Our engineers debated the correct time for eleven months. This is the compromise.</p>
+    </div>
+    <div class="sync-panel reveal-text" role="group" aria-label="System status">
+      <div class="sync-row"><span>TIME STATUS</span><span class="ok">✓ Synchronized</span></div>
+      <div class="sync-row"><span>PRECISION</span><span class="warn">± 3 hours</span></div>
+      <div class="sync-row"><span>IST SYNCHRONIZATION</span><span class="ok">100%</span></div>
+      <div class="sync-row"><span>DRIFT COMPENSATION</span><span class="ok">Active</span></div>
+    </div>
+  </section>
+
+  <section class="story-panel" data-panel="4">
+    <div class="panel-inner center">
+      <h2 class="reveal-text">Confidently<br>incorrect.</h2>
+      <p class="reveal-text sub">Built with the same care as a Swiss chronometer, and roughly the same reliability as a fortune cookie.</p>
+    </div>
+  </section>
+
+  <!-- ============ MAIN MENU ============ -->
+  <section id="menu" class="story-panel" data-panel="menu">
+    <div class="panel-inner center">
+      <h2 class="reveal-text">What would you like to do?</h2>
+      <div class="menu-cards reveal-text">
+        <button class="menu-card" id="btn-see-time" type="button">
+          <span class="menu-card-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="20"/><path d="M24 12v12l8 6"/></svg></span>
+          <span class="menu-card-title">See the Time</span>
+          <span class="menu-card-desc">View the current, approximately-current time.</span>
+        </button>
+        <button class="menu-card" id="btn-set-alarm" type="button">
+          <span class="menu-card-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="24" cy="26" r="16"/><path d="M24 18v8l6 4"/><path d="M14 10l-5 5M34 10l5 5"/></svg></span>
+          <span class="menu-card-title">Set an Alarm</span>
+          <span class="menu-card-desc">Schedule a wake-up, more or less.</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ SEE THE TIME VIEW ============ -->
+<section id="view-clock" class="app-view" aria-label="Clock view">
+  <button class="back-btn" data-back type="button" aria-label="Back to menu">&larr; Menu</button>
+  <h1 class="view-title">Current Time</h1>
+  <p class="view-sub">Indian Standard Time &mdash; officially.</p>
+
+  <div class="clock-wrap">
+    <div class="clock-face" id="clock-face">
+      <div class="clock-glass" aria-hidden="true"></div>
+      <div class="ticks" id="ticks" aria-hidden="true"></div>
+      <div class="hand hour-hand" id="hour-hand"></div>
+      <div class="hand minute-hand" id="minute-hand"></div>
+      <div class="hand second-hand" id="second-hand"></div>
+      <div class="clock-hub" aria-hidden="true"></div>
+    </div>
+
+    <div class="crown-assembly">
+      <button class="crown" id="crown-clock" type="button" aria-label="Cycle time adjustment mode" aria-pressed="false"></button>
+      <span class="mode-badge" id="mode-badge-clock" hidden></span>
+      <div class="crown-arrows" id="crown-arrows-clock" hidden>
+        <button class="arrow-btn" data-dir="up" type="button" aria-label="Adjust anti-clockwise">&uarr;</button>
+        <button class="arrow-btn" data-dir="down" type="button" aria-label="Adjust clockwise">&darr;</button>
+      </div>
+    </div>
+  </div>
+
+  <p class="crown-hint" id="crown-hint-clock">Want to fix the time? Click the crown.</p>
+
+  <div class="digital-readout" id="digital-readout" aria-live="off">--:--:-- --</div>
+
+  <button class="reset-btn" id="reset-time-btn" type="button">Reset Time</button>
+  <p class="micro-msg" id="reset-msg" aria-live="polite"></p>
+
+  <div class="status-strip">
+    <div class="status-chip"><span>SYNC</span><strong id="stat-sync">100%</strong></div>
+    <div class="status-chip"><span>DRIFT</span><strong id="stat-drift">± 0h</strong></div>
+    <div class="status-chip"><span>SOURCE</span><strong>IST&nbsp;NTP</strong></div>
+  </div>
+</section>
+
+<!-- ============ SET ALARM VIEW ============ -->
+<section id="view-alarm" class="app-view" aria-label="Alarm view">
+  <button class="back-btn" data-back type="button" aria-label="Back to menu">&larr; Menu</button>
+  <h1 class="view-title">Set an Alarm</h1>
+  <p class="view-sub">Adjust the crown to choose your wake-up time.</p>
+
+  <div class="clock-wrap">
+    <div class="clock-face" id="alarm-face">
+      <div class="clock-glass" aria-hidden="true"></div>
+      <div class="ticks" id="ticks-alarm" aria-hidden="true"></div>
+      <div class="hand hour-hand" id="alarm-hour-hand"></div>
+      <div class="hand minute-hand" id="alarm-minute-hand"></div>
+      <div class="clock-hub" aria-hidden="true"></div>
+    </div>
+
+    <div class="crown-assembly">
+      <button class="crown" id="crown-alarm" type="button" aria-label="Open alarm adjustment" aria-pressed="false"></button>
+      <span class="mode-badge" id="mode-badge-alarm" hidden></span>
+      <div class="crown-arrows" id="crown-arrows-alarm" hidden>
+        <button class="arrow-btn" data-dir="up" type="button" aria-label="Adjust minutes anti-clockwise">&uarr;</button>
+        <button class="arrow-btn" data-dir="down" type="button" aria-label="Adjust minutes clockwise">&darr;</button>
+      </div>
+    </div>
+  </div>
+
+  <p class="crown-hint">Click the crown, then use the arrows to set your alarm.</p>
+
+  <div class="digital-readout" id="alarm-readout" aria-live="off">07:00 AM</div>
+
+  <button class="reset-btn" id="set-alarm-btn" type="button">Set Alarm</button>
+
+  <div class="status-strip">
+    <div class="status-chip"><span>ALARM</span><strong id="stat-alarm-state">Inactive</strong></div>
+    <div class="status-chip"><span>SCHEDULED</span><strong id="stat-alarm-time">&mdash;</strong></div>
+  </div>
+</section>
+
+<!-- ============ ALARM SET MODAL ============ -->
+<div class="modal-overlay" id="alarm-modal" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-glow" aria-hidden="true"></div>
+    <p class="modal-eyebrow">ALARM SET</p>
+    <h2 id="modal-title">Your alarm has been successfully scheduled for:</h2>
+    <p class="modal-time" id="modal-time">8:23 PM</p>
+    <p class="modal-footnote">Please trust us.</p>
+    <button class="modal-close" id="modal-close" type="button">Got it</button>
+  </div>
+</div>
+
+<!-- ============ ALARM RINGING MODAL ============ -->
+<div class="modal-overlay" id="ringing-modal" hidden>
+  <div class="modal-card modal-card--ringing" role="dialog" aria-modal="true" aria-labelledby="ringing-title">
+    <div class="modal-glow modal-glow--warn" aria-hidden="true"></div>
+    <p class="modal-eyebrow warn">ALARM</p>
+    <h2 id="ringing-title">Rise and shine.</h2>
+    <p class="modal-time" id="ringing-time">6:21 PM</p>
+    <p class="modal-footnote">This is, technically, an alarm.</p>
+    <button class="modal-close modal-close--warn" id="stop-alarm-btn" type="button">Stop Alarm</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
