@@ -399,6 +399,7 @@
     const crown = $('#crown-clock');
     const arrows = $('#crown-arrows-clock');
     const badge = $('#mode-badge-clock');
+    const resetBtn = $('#reset-time-btn');
     const MODES = ['normal', 'minutes', 'hours'];
     let modeIndex = 0;
 
@@ -408,6 +409,9 @@
 
       crown.setAttribute('aria-pressed', String(active));
       arrows.hidden = !active;
+      // The Reset Time button only makes sense once the user has actually
+      // opened the crown to adjust something — keep it hidden until then.
+      resetBtn.hidden = !active;
 
       if (mode === 'minutes') {
         badge.hidden = false;
@@ -476,11 +480,22 @@
     });
 
     applyMode();
+
+    // Fully closes the adjustment UI: hides the arrows, the mode badge,
+    // and the Reset Time button, and returns the crown to its resting
+    // ("normal") state — used after Reset Time is pressed so the up/down
+    // arrows disappear again rather than staying open.
+    function closeAdjustment() {
+      modeIndex = 0;
+      applyMode();
+    }
+
+    return { closeAdjustment };
   }
 
   /* ---------------- 10. Reset Time button ---------------- */
 
-  function initResetButton() {
+  function initResetButton(clockCrown) {
     const btn = $('#reset-time-btn');
     const msg = $('#reset-msg');
     const face = $('#clock-face');
@@ -497,6 +512,11 @@
       if (!ClockRenderer.isRunning()) {
         ClockRenderer.start();
       }
+
+      // Close the adjustment UI back up: arrows, mode badge, and this
+      // Reset button itself all disappear again until the crown is
+      // clicked once more.
+      clockCrown.closeAdjustment();
 
       if (!prefersReducedMotion) {
         face.animate(
@@ -580,6 +600,7 @@
     const crown = $('#crown-alarm');
     const arrows = $('#crown-arrows-alarm');
     const badge = $('#mode-badge-alarm');
+    const setAlarmBtn = $('#set-alarm-btn');
     // Same closed -> minutes -> hours cycle as the Clock view's crown, so
     // the hour hand can be moved directly instead of only drifting by
     // fractions of a degree through repeated minute nudges.
@@ -592,6 +613,9 @@
 
       crown.setAttribute('aria-pressed', String(active));
       arrows.hidden = !active;
+      // Set Alarm only appears once the user has opened the crown and
+      // actually has a time dialed in to confirm.
+      setAlarmBtn.hidden = !active;
 
       if (mode === 'minutes') {
         badge.hidden = false;
@@ -643,6 +667,17 @@
 
     applyMode();
     AlarmPicker.render();
+
+    // Fully closes the adjustment UI: hides the arrows, the mode badge,
+    // and the Set Alarm button, and returns the crown to its resting
+    // ("closed") state — used after Set Alarm is pressed so the up/down
+    // arrows disappear again rather than staying open.
+    function closeAdjustment() {
+      modeIndex = 0;
+      applyMode();
+    }
+
+    return { closeAdjustment };
   }
 
   /* ---------------- 12. Useless alarm scheduling + Web Audio ---------------- */
@@ -774,7 +809,7 @@
     return { scheduleFrom, dismiss, getScheduledDate, playTick };
   })();
 
-  function initAlarmFlow() {
+  function initAlarmFlow(alarmCrown) {
     const setBtn = $('#set-alarm-btn');
     const modal = $('#alarm-modal');
     const modalTime = $('#modal-time');
@@ -792,6 +827,11 @@
 
       stateChip.textContent = 'Armed';
       timeChip.textContent = formatTimeShort(wrongDate);
+
+      // Close the adjustment UI back up: arrows, mode badge, and the Set
+      // Alarm button itself all disappear again until the crown is
+      // clicked once more.
+      alarmCrown.closeAdjustment();
     });
 
     closeBtn.addEventListener('click', () => {
@@ -815,10 +855,12 @@
     initIntro();
     initScrollReveal();
     initNavigation();
-    initClockCrown();
-    initResetButton();
-    initAlarmCrown();
-    initAlarmFlow();
+
+    const clockCrown = initClockCrown();
+    initResetButton(clockCrown);
+
+    const alarmCrown = initAlarmCrown();
+    initAlarmFlow(alarmCrown);
 
     ClockRenderer.start();
   });

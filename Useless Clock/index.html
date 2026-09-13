@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>The Useless Clock</title>
+<title>The Useless Clock — A TinkerHub Useless Project</title>
 <meta name="description" content="A beautiful, sophisticated, fully interactive clock that does everything a normal clock does — except reliably tell the correct time.">
 <link rel="icon" href="assets/clock.png">
 <link rel="stylesheet" href="style.css">
@@ -128,7 +128,7 @@
 
   <div class="digital-readout" id="digital-readout" aria-live="off">--:--:-- --</div>
 
-  <button class="reset-btn" id="reset-time-btn" type="button">Reset Time</button>
+  <button class="reset-btn" id="reset-time-btn" type="button" hidden>Reset Time</button>
   <p class="micro-msg" id="reset-msg" aria-live="polite"></p>
 
   <div class="status-strip">
@@ -167,7 +167,7 @@
 
   <div class="digital-readout" id="alarm-readout" aria-live="off">07:00 AM</div>
 
-  <button class="reset-btn" id="set-alarm-btn" type="button">Set Alarm</button>
+  <button class="reset-btn" id="set-alarm-btn" type="button" hidden>Set Alarm</button>
 
   <div class="status-strip">
     <div class="status-chip"><span>ALARM</span><strong id="stat-alarm-state">Inactive</strong></div>

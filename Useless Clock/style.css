@@ -730,6 +730,7 @@ a:focus-visible {
   cursor: pointer;
   transition: transform .2s, box-shadow .3s;
 }
+.reset-btn[hidden] { display: none; }
 .reset-btn:hover { box-shadow: 0 0 24px rgba(124,92,255,.4); transform: translateY(-2px); }
 .reset-btn:active { transform: translateY(0) scale(.97); }
 
