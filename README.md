@@ -2,7 +2,7 @@
 
 
 
-# [Project Name] 🎯
+# The Useless Clock 🎯
 
 
 ## Basic Details
@@ -10,26 +10,30 @@
 
 
 ### Team Members
-- Team Lead: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Team Lead: Sreyas A - Sree Chitra Thirunal College of Engineering, Thiruvananthapuram
+
 
 ### Project Description
-[2-3 lines about what your project does]
+My project is a clock website. It shows us the wrong time. The landing page shows us about Time. As we scroll down, it gives us two options to see the time and set an alarm. 
+
+If we click to see the time, it will leads to another section. There you will see a time which will be wrong. You can adjust the time by clicking the button on the right side of clock just like our watch. Is we proceed with that time, it will set into a random time which is not correct. The loop continues
+
+If user clicks on set an alarm, it will take you to another clock. You can set alarm clock there. But there is another problem. The alarm will set into another time than what you have choosen. This loop also continues.
+
+The time is picked random and mostly impredictable.
 
 ### The Problem (that doesn't exist)
-[What ridiculous problem are you solving?]
+
+People are reaching on time and punctual.
 
 ### The Solution (that nobody asked for)
-[How are you solving it? Keep it fun!]
+I made a clock with incorrect time.
 
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
+- HTML, CSS, and JavaScript
+- Chat GPT and Claude
 
 For Hardware:
 - [List main components]
@@ -37,7 +41,7 @@ For Hardware:
 - [List tools required]
 
 ### Implementation
-For Software:
+For Software: Designed a functioning website with those features.
 # Installation
 [commands]
 
@@ -48,14 +52,17 @@ For Software:
 For Software:
 
 # Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+![alt text](image.png)
+This is where the websitw begins scroll as the animations came.
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
+![alt text](image-1.png)
+This is the end of scrolling. You will be navigated to Alarm and clock from here
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+![alt text](image-2.png)
+Here you see time. You can adjust time by clicking on the button on the rightside
+
+![alt text](image-3.png)
+Here you can set alarm. You can adjust time by the button rightside.
 
 # Diagrams
 ![Workflow](Add your workflow/architecture diagram here)
